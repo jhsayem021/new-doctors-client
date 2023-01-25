@@ -27,10 +27,10 @@ const Footer = () => {
     </div>
   </div>
 </footer>
-<footer className="footer items-center p-4 bg-accent text-neutral-content">
-  <div className="items-center grid-flow-col">
+<footer className="  p-4 bg-accent text-neutral-content">
+  <div className="">
     
-    <p>Copyright © 2023 - All right reserved</p>
+    <p className='text-center'>Copyright © 2023 - All right reserved</p>
   </div> 
   
 </footer>

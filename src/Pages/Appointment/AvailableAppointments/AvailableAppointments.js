@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import AppointmentOption from './AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
 
-const AvailableAppointments = ({selectedDate,setSelectedDate}) => {
+const AvailableAppointments = ({selectedDate}) => {
     const [appointmentOptions, setAppointmentOptions] = useState([])
     const [treatment, setTreatment] = useState(null);
 
@@ -14,9 +14,9 @@ const AvailableAppointments = ({selectedDate,setSelectedDate}) => {
     },[])
 
     return (
-        <div className='mt-20 mb-24'>
+        <div className='mt-16  mb-10'>
             <p className='text-primary text-center font-bold' >Available Services on  {format(selectedDate, 'PP')}.</p>
-            <div className='grid gap-6  grid-cols-1 lg:grid-cols-3 mt-24'>
+            <div className='grid gap-6  grid-cols-1 lg:grid-cols-3  mt-10'>
                 {
                     appointmentOptions.map(option =><AppointmentOption
                     key={option._id}
@@ -28,6 +28,8 @@ const AvailableAppointments = ({selectedDate,setSelectedDate}) => {
             {
                 treatment && <BookingModal
                 treatment = {treatment}
+                setTreatment = {setTreatment}
+                selectedDate = {selectedDate}
                 ></BookingModal>
             }
         </div>

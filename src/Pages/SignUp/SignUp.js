@@ -1,43 +1,43 @@
 import React, {  useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../Context/AuthProvider';
+import  { AuthContext } from '../../Context/AuthProvider';
 // import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser } = useContext(AuthContext);
-    const [signUpError, setSignUPError] = useState('');
-    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const { createUser , updateUser} = useContext(AuthContext);
+    const [signUpError, setSignUpError] = useState('');
+    // const [createdUserEmail, setCreatedUserEmail] = useState('')
     // const [token] = useToken(createdUserEmail);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // if(token){
     //     navigate('/');
     // }
 
     const handleSignUp = (data) => {
-        setSignUPError('');
+        setSignUpError('');
         console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                // toast('User Created Successfully.')
-                // const userInfo = {
-                //     displayName: data.name
-                // }
-                // updateUser(userInfo)
-                //     .then(() => {
-                //         saveUser(data.name, data.email);
-                //     })
-                //     .catch(err => console.log(err));
+                toast('User Created Successfully.')
+                console.log(data.name)
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {})
+                    .catch(err => console.log(err));
             })
             .catch(error => {
                 console.log(error)
-                setSignUPError(error.message)
+                setSignUpError(error.message)
             });
+            // saveUser(data.name, data.email);
     }
 
     // const saveUser = (name, email) =>{

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import AppointmentOption from './AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
 
-const AvailableAppointments = ({selectedDate}) => {
+const AvailableAppointments = ({selectedDate , user}) => {
     const [appointmentOptions, setAppointmentOptions] = useState([])
     const [treatment, setTreatment] = useState(null);
-
+   
     useEffect( ()=>{
-        fetch('appointmentOptions.json')
+        fetch('http://localhost:5000/appointmentoptions')
         .then(res => res.json())
         .then(data => setAppointmentOptions(data))
     },[])
@@ -30,6 +30,7 @@ const AvailableAppointments = ({selectedDate}) => {
                 treatment = {treatment}
                 setTreatment = {setTreatment}
                 selectedDate = {selectedDate}
+                user = {user}
                 ></BookingModal>
             }
         </div>

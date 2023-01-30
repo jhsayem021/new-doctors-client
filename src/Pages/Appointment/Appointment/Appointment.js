@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../Context/AuthProvider';
 import AppointmentBanner from '../AppointmentBanner/AppointmentBanner';
 import AvailableAppointments from '../AvailableAppointments/AvailableAppointments';
 
 const Appointment = () => {
     const [selectedDate, setSelectedDate] = useState(new Date);
+    const {user} = useContext(AuthContext);
     
     return (
         <div>
@@ -13,7 +15,7 @@ const Appointment = () => {
             ></AppointmentBanner>
             <AvailableAppointments
             selectedDate = {selectedDate}
-            
+            user = {user}
             ></AvailableAppointments>
         </div>
     );

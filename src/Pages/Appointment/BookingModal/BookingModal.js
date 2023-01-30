@@ -1,7 +1,7 @@
 import { format } from 'date-fns/esm';
 import React from 'react';
 
-const BookingModal = ({ treatment, selectedDate , setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate , setTreatment ,user }) => {
     const { name, slots } = treatment;
     const date = format(selectedDate, 'PP')
 
@@ -45,8 +45,8 @@ const BookingModal = ({ treatment, selectedDate , setTreatment }) => {
                             
                             
                         </select>
-                        <input name="name" type="text" placeholder="name" className="input input-bordered w-full" />
-                        <input name="email" type="email" placeholder="email" className="input input-bordered w-full" />
+                        <input name="name"  value={user.displayName} disabled type="text" placeholder="name" className="input input-bordered w-full" />
+                        <input name="email" value={user.email} disabled type="email" placeholder="email" className="input input-bordered w-full" />
                         <input name="phone" type="text" placeholder="phone" className="input input-bordered w-full" />
                         <input type="submit" value="Submit" className="btn btn-accent text-white w-full" />
                     </form>

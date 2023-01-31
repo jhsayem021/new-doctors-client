@@ -1,7 +1,8 @@
 import { format } from 'date-fns/esm';
 import React from 'react';
+import { toast } from 'react-hot-toast';
 
-const BookingModal = ({ treatment, selectedDate , setTreatment ,user }) => {
+const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }) => {
     const { name, slots } = treatment;
     const date = format(selectedDate, 'PP')
 
@@ -23,8 +24,26 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user }) => {
             phone,
             
         }
-        console.log(booking);
+
+        fetch('https://new-doctors-server.vercel.app/bookings',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.acknowledged){
+                console.log(data);
+                toast('Booking Successfully Confirmed')
+                refetch();
         setTreatment(null);
+        
+            }
+            
+        })
+        
     }
 
     return (

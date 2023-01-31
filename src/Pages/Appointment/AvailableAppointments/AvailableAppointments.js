@@ -2,16 +2,30 @@ import React, { useContext, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import AppointmentOption from './AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../../Shared/Loading/Loading';
+
 
 const AvailableAppointments = ({selectedDate , user}) => {
-    const [appointmentOptions, setAppointmentOptions] = useState([])
+    // const [appointmentOptions, setAppointmentOptions] = useState([])
     const [treatment, setTreatment] = useState(null);
-   
-    useEffect( ()=>{
-        fetch('http://localhost:5000/appointmentoptions')
+    const date = format(selectedDate, 'PP');
+
+    const {data: appointmentOptions = [] , refetch , isLoading } = useQuery({
+        queryKey:['appointmentoptions',date],
+        queryFn: () => fetch(`https://new-doctors-server.vercel.app/appointmentoptions?date=${date}`)
         .then(res => res.json())
-        .then(data => setAppointmentOptions(data))
-    },[])
+    })
+   
+    // useEffect( ()=>{
+    //     fetch('https://new-doctors-server.vercel.app/appointmentoptions')
+    //     .then(res => res.json())
+    //     .then(data => setAppointmentOptions(data))
+    // },[])
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <div className='mt-16  mb-10'>
@@ -31,6 +45,7 @@ const AvailableAppointments = ({selectedDate , user}) => {
                 setTreatment = {setTreatment}
                 selectedDate = {selectedDate}
                 user = {user}
+                refetch = {refetch}
                 ></BookingModal>
             }
         </div>

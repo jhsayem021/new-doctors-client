@@ -25,7 +25,7 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
             
         }
 
-        fetch('https://new-doctors-server.vercel.app/bookings',{
+        fetch('https://new-doctors-server-jhsayem021.vercel.app/bookings',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -40,6 +40,9 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
                 refetch();
         setTreatment(null);
         
+            }
+            else{
+                toast(data.message)
             }
             
         })

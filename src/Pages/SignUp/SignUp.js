@@ -11,7 +11,7 @@ const SignUp = () => {
     const [signUpError, setSignUpError] = useState('');
     // const [createdUserEmail, setCreatedUserEmail] = useState('')
     // const [token] = useToken(createdUserEmail);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // if(token){
     //     navigate('/');
@@ -30,31 +30,51 @@ const SignUp = () => {
                     displayName: data.name
                 }
                 updateUser(userInfo)
-                    .then(() => {})
-                    .catch(err => console.log(err));
+                    .then(() => {
+
+                        saveUser(data.name, data.email);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        
+                       
+                    });
             })
             .catch(error => {
                 console.log(error)
                 setSignUpError(error.message)
             });
-            // saveUser(data.name, data.email);
+            
     }
 
-    // const saveUser = (name, email) =>{
-    //     const user ={name, email};
-    //     fetch('https://doctors-portal-server-rust.vercel.app/users', {
-    //         method: 'POST',
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         },
-    //         body: JSON.stringify(user)
-    //     })
-    //     .then(res => res.json())
-    //     .then(data =>{
-    //         setCreatedUserEmail(email);
-    //     })
-    // }
-
+    const saveUser = (name, email) =>{
+        const user ={name, email};
+        fetch('https://new-doctors-server-jhsayem021.vercel.app/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            // setCreatedUserEmail(email);
+            getUserToken(email);
+            
+        })
+        
+    }
+    
+    const getUserToken = email =>{
+        fetch(`https://new-doctors-server-jhsayem021.vercel.app/jwt?email=${email}`)
+        .then(res => res.json())
+        .then(data =>{
+            if(data.accessToken){
+                localStorage.setItem('accessToken' , data.accessToken)
+                navigate('/');
+            }
+        })
+    }
     
 
     return (

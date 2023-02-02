@@ -6,11 +6,20 @@ const MyAppointment = () => {
 
     const {user} = useContext(AuthContext);
 
-    const uri = `https://new-doctors-server-jhsayem021.vercel.app/userbookings?email=${user.email}`;
+    const url = `https://new-doctors-server-jhsayem021.vercel.app/userbookings?email=${user.email}`;
 
     const {data: bookings = [] } = useQuery({
-        queryKey:['bookings', user.email],
-        queryFn: ()=>fetch(uri).then(res => res.json())
+        queryKey:['bookings', user?.email],
+        queryFn: async ()=>{
+          const res = await fetch(url , {
+            headers:{
+              authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+          })
+          const data = await res.json()
+          return data;
+        
+        }
     })
     console.log(bookings);
 
@@ -22,9 +31,10 @@ const MyAppointment = () => {
   <table className="table w-full">
     <thead>
       <tr>
-        <th></th>
+        <th>SL</th>
         <th>Name</th>
         <th>Treatment</th>
+        <th>Schedule time</th>
         <th>Date</th>
       </tr>
     </thead>
@@ -32,9 +42,10 @@ const MyAppointment = () => {
    
       {
         bookings.map((booking,i)=><tr>
-        <th>{i}</th>
+        <th>{i+1}</th>
         <td>{booking.patient}</td>
         <td>{booking.treatment}</td>
+        <td>{booking.slot}</td>
         <td>{booking.appointmentDate}</td>
       </tr>)
       }

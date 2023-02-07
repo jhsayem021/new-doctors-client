@@ -67,8 +67,8 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
                             
                             
                         </select>
-                        <input name="name"  value={user.displayName} disabled type="text" placeholder="name" className="input input-bordered w-full" />
-                        <input name="email" value={user.email} disabled type="email" placeholder="email" className="input input-bordered w-full" />
+                        <input name="name"  value={user?.displayName} disabled type="text" placeholder="name" className="input input-bordered w-full" />
+                        <input name="email" value={user?.email} disabled type="email" placeholder="email" className="input input-bordered w-full" />
                         <input name="phone" type="text" placeholder="phone" className="input input-bordered w-full" />
                         <input type="submit" value="Submit" className="btn btn-accent text-white w-full" />
                     </form>

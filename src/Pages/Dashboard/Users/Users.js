@@ -38,7 +38,7 @@ const Users = () => {
   <table className="table w-full">
     <thead>
       <tr>
-        <th>SL</th>
+        <th></th>
         <th>Name</th>
         <th>Email</th>
         <th>Admin</th>

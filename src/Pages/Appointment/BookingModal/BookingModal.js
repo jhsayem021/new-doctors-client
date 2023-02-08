@@ -3,7 +3,7 @@ import React from 'react';
 import { toast } from 'react-hot-toast';
 
 const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }) => {
-    const { name, slots } = treatment;
+    const { name, slots , price } = treatment;
     const date = format(selectedDate, 'PP')
 
     const handleForm = e =>{
@@ -13,7 +13,7 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
         const slot = form.slot.value;
         const email = form.email.value;
         const phone = form.phone.value;
-        console.log( date,slot,name, email, phone);
+        console.log( date,slot,name, email, phone, price);
 
         const booking = {
             treatment: treatment.name,
@@ -22,6 +22,7 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
             slot,
             email,
             phone,
+            price
             
         }
 
@@ -55,7 +56,8 @@ const BookingModal = ({ treatment, selectedDate , setTreatment ,user , refetch }
             <div className="modal">
                 <div className="modal-box relative">
                     <label htmlFor="Booking-Modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold mb-10">{name}</h3>
+                    <h3 className="text-lg font-bold mb-10">{name} <span className='ml-8 '>Price: <span className='text-primary'>${price}</span></span> </h3>
+                    
                     <form onSubmit={handleForm} className='grid gap-4 grid-cols-1' >
                         <input type="text" value={date} disabled className="input input-bordered w-full" />
                         <select name= "slot" className="select select-bordered w-full max-w-xs">

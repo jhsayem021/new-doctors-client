@@ -3,13 +3,17 @@ import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
 import useAdmin from '../Hooks/useAdmin';
 import Navber from '../Pages/Shared/Navber/Navber';
-
+import bgimage from '../assets/images/bg.png'
 const DashboardLayout = () => {
   const {user} = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email)
+  const backgroundImg = {
+    backgroundImage: `url(${bgimage})`,
+    backgroundRepeat: 'no-repeat'
+  }
 
     return (
-        <div>
+        <div style={backgroundImg} >
             <Navber></Navber>
             <div className="drawer drawer-mobile">
   <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

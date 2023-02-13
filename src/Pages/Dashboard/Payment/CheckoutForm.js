@@ -10,6 +10,7 @@ const CheckoutForm = ({booking}) => {
     const {price , email , name} = booking;
     const [clientSecret, setClientSecret] = useState("")
 
+
     useEffect(()=>{
       fetch("https://new-doctors-server-jhsayem021.vercel.app/create-payment-intent" ,{
         method: 'POST',
@@ -71,8 +72,29 @@ const CheckoutForm = ({booking}) => {
         }
         console.log(paymentIntent);
         if(paymentIntent.status === "succeeded"){
-          setSuccess('Congrates! your payment completed')
-          setTransactionId(paymentIntent.id);
+          
+          const payment = {
+            price,
+            transactionId: paymentIntent.id,
+            email,
+            bookingId: booking._id,
+          }
+          fetch("https://new-doctors-server-jhsayem021.vercel.app/payments",{
+            method: 'POST',
+            headers: {
+              "Content-Type" : "application/json",
+              authorization: `bearer  ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(payment)
+          })
+          .then(res => res.json())
+          .then(data =>{
+            console.log(data);
+            if(data.insertedId){
+              setSuccess('Congrates! your payment completed')
+              setTransactionId(paymentIntent.id);
+            }
+          })
         }
         console.log('paymentIntent', paymentIntent)
         

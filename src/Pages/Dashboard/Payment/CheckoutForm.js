@@ -13,7 +13,7 @@ const CheckoutForm = ({booking}) => {
 
 
     useEffect(()=>{
-      fetch("https://new-doctors-server-jhsayem021.vercel.app/create-payment-intent" ,{
+      fetch("http://localhost:5000/create-payment-intent" ,{
         method: 'POST',
         headers: {
           "Content-Type" : "application/json",
@@ -81,11 +81,11 @@ const CheckoutForm = ({booking}) => {
             email,
             bookingId: booking._id,
           }
-          fetch("https://new-doctors-server-jhsayem021.vercel.app/payments",{
+          fetch("http://localhost:5000/payments",{
             method: 'POST',
             headers: {
               "Content-Type" : "application/json",
-              authorization: `bearer  ${localStorage.getItem('accessToken')}`
+              authorization: `bearer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(payment)
           })

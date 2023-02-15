@@ -38,7 +38,7 @@ fetch(`https://new-doctors-server-jhsayem021.vercel.app/doctors/${doctor._id}`,{
 .then(res=>res.json())
 .then(data =>{
     console.log(data)
-    if(data.deleteCount>0){
+    if(data.deletedCount>0){
 
         refetch();
         toast.success(`${doctor.name} delete successfully`)
@@ -85,7 +85,7 @@ fetch(`https://new-doctors-server-jhsayem021.vercel.app/doctors/${doctor._id}`,{
         <td>{doctor.speciality}</td>
         <td>
         <label onClick={()=>setDeletingDoctor(doctor)} htmlFor="Confirmation-modal" className="btn btn-xs btn-error ">Delete</label>
-            {/* <button   className=''></button> */}
+           
         </td>
       </tr>)
       }

@@ -1,10 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
+import Loading from '../../Shared/Loading/Loading';
 
 const Users = () => {
 
-    const {data: users=[] , refetch} = useQuery({
+  const [deletingUser, setDeletingUser] = useState(null);
+    const closeModal = ()=>{
+        setDeletingUser(null);
+    }
+
+    const {data: users=[] , refetch ,isLoading} = useQuery({
         queryKey: ['users'],
         queryFn: async ()=>{
             const res = await fetch('https://new-doctors-server-jhsayem021.vercel.app/users')
@@ -29,6 +36,33 @@ const Users = () => {
         }
       })
 
+    }
+
+    const handleUserDelete = (user) =>{
+console.log(user)
+fetch(`https://new-doctors-server-jhsayem021.vercel.app/users/${user._id}`,{
+    method:'DELETE',
+    headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+    }
+})
+.then(res=>res.json())
+.then(data =>{
+    console.log(data)
+    if(data.deletedCount>0){
+
+        console.log(user.name)
+        
+        toast.success(`${user.name} delete successfully`)
+        refetch();
+    }
+    
+})
+
+}
+
+    if(isLoading){
+        return <Loading></Loading>
     }
 
     return (
@@ -58,7 +92,10 @@ const Users = () => {
         <td>{
           user?.role !== 'admin' &&
           <button onClick={()=>handleMakeAdmin(user._id)} className='btn btn-xs btn-primary'>MakeAdmin</button>}</td>
-        <td><button className='btn btn-xs btn-accent'>Delete</button></td>
+       <td>
+        <label onClick={()=>setDeletingUser(user)} htmlFor="Confirmation-modal" className="btn btn-xs btn-error ">Delete</label>
+           
+        </td>
         
         
       </tr>)
@@ -68,6 +105,19 @@ const Users = () => {
     </tbody>
   </table>
 </div>
+
+{
+    deletingUser && <ConfirmationModal
+    title={`Are you sure want to Delete`}
+    message={`If you delete, ${deletingUser?.name} it can't be undone`}
+    successAction = {handleUserDelete}
+    modalData = {deletingUser}
+    closeModal = {closeModal}
+    ></ConfirmationModal>
+}
+
+
+
         </div>
     );
 };

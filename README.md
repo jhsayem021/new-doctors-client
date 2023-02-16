@@ -1,4 +1,4 @@
-### Doctors portal 
+### Doctors portal (Only a Demo site)
 
 Live site link: https://new-doctors.web.app/
 
@@ -19,4 +19,11 @@ Live site link: https://new-doctors.web.app/
 2.Book a service Appointment
 
 3.Can create a payment by stripe
+
+### Admin panal
+
+1. Manage Users and Doctor List
+
+2.Can see all booking list
+
 
